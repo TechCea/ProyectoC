@@ -1,0 +1,10 @@
+.ygo-card{
+    img{
+        width: 100%;
+        object-fit: cover;
+        width: 200px;
+        border-radius: 5px;
+        gap: 9.5em;
+        margin-top: 1em;
+    }
+}
