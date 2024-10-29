@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Card } from '../interfaces/card.interface';
 import { map } from 'rxjs';
 
 @Injectable({
@@ -11,10 +10,10 @@ export class CardService {
 
   constructor(private http: HttpClient) {}
 
-  getCards() {
+  getCards(offset = 0) {
     const params = {
       num: 100,
-      offset: 100
+      offset,
     };
     return this.http.get<any>(this.API_URL, { params }).pipe(
       map((res) => res.data) // Aseguramos que res.data es un array de Card
