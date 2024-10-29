@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { Card } from '../interfaces/card.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,21 @@ export class CardService {
 
   constructor(private http: HttpClient) {}
 
-  getCards(offset = 0) {
-    const params = {
+  getCards(name: string | null, offset = 0) {
+    const params: any = {
       num: 100,
       offset,
     };
+    if(name) params.fname = name;
     return this.http.get<any>(this.API_URL, { params }).pipe(
-      map((res) => res.data) // Aseguramos que res.data es un array de Card
+      map((res) => res.data)
+    );
+  }
+  
+  getCard(id: string): Observable<Card> {
+    const params = { id };
+    return this.http.get<any>(this.API_URL, { params }).pipe(
+      map((res) => (res.data && res.data.length > 0 ? res.data[0] : null))
     );
   }
 }
